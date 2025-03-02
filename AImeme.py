@@ -29,11 +29,9 @@ SPARKAI_APP_ID = 'your_id'
 SPARKAI_API_SECRET = 'yours'
 SPARKAI_API_KEY = 'yours'
 
-
 def generate_password(length=6):
     """生成 6 位随机数字 ID"""
     return ''.join(secrets.choice(string.digits) for _ in range(length))
-
 
 def add_newline(text):
     """优化文本换行"""
@@ -47,7 +45,6 @@ def add_newline(text):
                 buffer = ''
     result += buffer
     return result.rstrip('\n')
-
 
 def add_text_with_outline(frame, text, font_path, font_size, text_color, outline_color, position, outline_width=2):
     """给图片添加带描边的文字"""
@@ -72,7 +69,6 @@ def add_text_with_outline(frame, text, font_path, font_size, text_color, outline
 
     draw.text((x, y), text, font=font, fill=text_color)
     return np.array(img)
-
 
 def create_video(data, video_folder, output_path, font_path, font_size=59, text_color=(255, 255, 255),
                  outline_color=(0, 0, 0), text_position=('center', 'top'), outline_width=3):
@@ -99,7 +95,6 @@ def create_video(data, video_folder, output_path, font_path, font_size=59, text_
     final_clip = concatenate_videoclips(clips, method="compose")
     final_clip.write_videofile(output_path, codec='libx264', audio_codec='aac')
     return output_path
-
 
 def file_upload(file_path, user_id):
     """上传文件到百度云，并返回状态"""
