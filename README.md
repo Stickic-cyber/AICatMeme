@@ -1,4 +1,6 @@
 # AICatmeme
+
+首先，要在本地运行“批量预制视频.py”，来制作所有meme和背景组合的视频，并将其放在与您的backgrounds同级的文件夹下，且命名为“output_videos”
  
 重磅更新！重磅更新！
 
