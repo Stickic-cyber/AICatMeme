@@ -192,13 +192,13 @@ def remove_green_screen_and_replace_background(
 
 if __name__ == "__main__":
     # 示例用法
-    # input_folder = "D:/Project/AImeme/1"  # 替换为您的输入视频文件夹路径
-    # audio_folder = "D:/Project/AImeme/1/memeaudio"  # 替换为您的音频文件夹路径
+    # input_folder = "D:/Project/AImeme"  # 替换为您的输入视频文件夹路径
+    # audio_folder = "D:/Project/AImeme/memeaudio"  # 替换为您的音频文件夹路径
     input_folder = "D:/Project/AImeme/meme"  # 替换为您的输入视频文件夹路径
     audio_folder = "D:/Project/AImeme/meme_audio"  # 替换为您的音频文件夹路径
-    background_folder = "D:/Project/AImeme/1/backgrounds"  # 替换为您的背景图片文件夹路径
-    output_folder = "D:/Project/AImeme/1/output_videos"  # 替换为您的输出文件夹路径
-    temp_folder = "D:/Project/AImeme/1/temp_videos"             # 替换为您的临时文件夹路径
+    background_folder = "D:/Project/AImeme/backgrounds"  # 替换为您的背景图片文件夹路径
+    output_folder = "D:/Project/AImeme/output_videos"  # 替换为您的输出文件夹路径
+    temp_folder = "D:/Project/AImeme/temp_videos"             # 替换为您的临时文件夹路径
 
     remove_green_screen_and_replace_background(
         input_folder, 
