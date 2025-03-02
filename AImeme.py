@@ -25,9 +25,9 @@ ACCESS_TIME_LIMIT = 3  # 限制每个 IP 3 秒内只能请求 1 次
 # SparkAI 配置
 SPARKAI_URL = 'wss://spark-api.xf-yun.com/chat/max-32k'  #'wss://spark-api.xf-yun.com/v3.5/chat'
 SPARKAI_DOMAIN = 'max-32k' #'generalv3.5'
-SPARKAI_APP_ID = 'ffbaf996'
-SPARKAI_API_SECRET = 'YmY1YTI5NThiNjhkMTU1NzBjYTA2MWZm'
-SPARKAI_API_KEY = 'a4336884b784ae7a60381591e2ddd3f5'
+SPARKAI_APP_ID = 'your_id'
+SPARKAI_API_SECRET = 'yours'
+SPARKAI_API_KEY = 'yours'
 
 
 def generate_password(length=6):
@@ -167,10 +167,10 @@ def generate_video_endpoint():
         return jsonify({"message": "视频生成失败，可能缺少对应的素材"}), 500
 
     if not file_upload(output_path, user_id):
-        return jsonify({"message": "视频上传失败", "backup_url": f"http://pan.baidu.com/s/1cYqnEToDApOhKiF5TnmaOQ?pwd=meme"}), 500
+        return jsonify({"message": "视频上传失败", "backup_url": f"your_baidu_netdisk_path"}), 500
 
     return jsonify({
-        "message": f"您的专属ID是：{user_id}。\n请访问：http://pan.baidu.com/s/1cYqnEToDApOhKiF5TnmaOQ?pwd=meme\n找到ID对应的文件夹后请及时下载！",
+        "message": f"您的专属ID是：{user_id}。\n请访问：your_baidu_netdisk_path\n找到ID对应的文件夹后请及时下载！",
         "file_path": output_path
     })
 
