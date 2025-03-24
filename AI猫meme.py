@@ -7,7 +7,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips
 # 需自行下载imagemagick.exe
 
 # 设置主路径比如：
-main_path="D:/AI猫meme"
+main_path="D:/AICatmeme"
 
 
 def BgVideo (text, place, num):
