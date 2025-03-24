@@ -123,22 +123,22 @@ places = ["concert", "fantacy", "others", "rooftop", "stage", "airport", "amusem
 # one example
 story = [
   [
-    "图书馆",
+    "library",
     "同学，某某学院的某教室怎么走？",
     "得瑟"
   ],
   [
-    "操场",
+    "playground",
     "她老乡某某回家了，让她过来替上课的。",
     "得意"
   ],
   [
-    "教室",
+    "classroom",
     "然后抬头看见了站在讲台上准备上课的老师——我。",
     "震惊"
   ],
   [
-    "教室",
+    "classroom",
     "打了一个电话之后默默的离开了教室……",
     "尴尬"
   ]
