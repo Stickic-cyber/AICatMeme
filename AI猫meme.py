@@ -19,7 +19,7 @@ def BgVideo (text, place, num):
     blank_clip = ColorClip((width, height), color=(0, 0, 0), duration=duration)
 
     # 在指定时间点添加图片
-    image_clip = ImageClip("%s/background/%s.jpg" % (main_path, place)).resize(width=1080)  # 调整图片大小
+    image_clip = ImageClip("%s/backgrounds/%s.jpg" % (main_path, place)).resize(width=1080)  # 调整图片大小
     image_start_time = 0  # 图片出现的时间（秒）
     image_end_time = 10  # 图片消失的时间（秒）
     image_clip = image_clip.set_position(('center', 'top')).set_start(image_start_time).set_end(image_end_time)
@@ -35,13 +35,13 @@ def BgVideo (text, place, num):
     final_clip = CompositeVideoClip([blank_clip, image_clip, txt_clip])#, additional_video_clip])
 
     # 保存最终视频
-    final_clip.write_videofile('%s/成品/background%s.mp4'%(main_path, num), codec='libx264', fps=24)
+    final_clip.write_videofile('%s/成品/backgrounds%s.mp4'%(main_path, num), codec='libx264', fps=24)
 
 def AddMeme(emo, num):
     # 绿幕视频文件路径
     green_screen_video_path ='%s/meme/%s.mp4'%(main_path,emo)
     # 替换视频文件路径
-    replacement_video_path = '%s/成品/background%s.mp4'%(main_path,num)
+    replacement_video_path = '%s/成品/backgrounds%s.mp4'%(main_path,num)
     # 输出路径
     output_video_path = '%s/成品/%s.mp4'%(main_path,num)
     # 加载绿幕视频
