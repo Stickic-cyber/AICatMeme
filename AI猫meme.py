@@ -3,9 +3,10 @@ from moviepy.editor import *
 from moviepy.config import change_settings
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
-# 重要的写在最前面，本脚需指定magick.exe路径，以及设置主路径
+# 重要的写在最前面，本脚需指定magick.exe路径
+# 需自行下载imagemagick.exe
 
-# 比如：
+# 设置主路径比如：
 main_path="D:/AI猫meme"
 
 
@@ -116,8 +117,8 @@ def concatenate_videos(folder_path, video_names, output_file):
     final_clip = concatenate_videoclips(video_clips)
     final_clip.write_videofile(output_file)
 
-emotions = ['哀求', '崩溃', '吃惊', '得瑟', '得意', '发呆', '烦躁', '害羞', '欢呼', '教训', '惊讶', '绝望', '可怜', '努力', '尴尬', '傻笑', '威严', '无辜', '无助', '兴奋', '勇敢', '愉快']
-places = ["医院", "车站", "学校", "餐厅", "厨房", "公园", "图书馆", "银行", "商店", "电影院", "体育馆", "游泳池", "机场", "博物馆", "剧院", "游乐园", "草原", "家里", "村子", "教室", "操场"]
+emotions = ["哀求", "崩溃", "吃惊", "大笑", "呆滞", "得瑟", "得意", "烦躁", "害羞", "坏笑", "欢呼", "饥饿", "焦急", "教训", "惊讶", "可怜", "蔑视", "努力", "其他", "傻笑", "痛苦", "威严", "无辜", "无奈", "无助", "兴奋", "勇敢", "愉快", "震惊","愉快"]
+places = ["concert", "fantacy", "others", "rooftop", "stage", "airport", "amusementpark", "bank", "cinema", "classroom", "grassland", "gym", "home", "hospital", "kitchen", "library", "museum", "park", "playground", "pool", "restaurant", "school", "shop", "station", "theater", "village"]
 
 # one example
 story = [
@@ -154,7 +155,7 @@ for i in range(len(story)):
     add_audio_to_video(emo, i)
 
 folder_path = "%s/成品"% main_path # 自动创建一个成品所在文件夹，需指定路径
-video_names = ["out0.mp4","out1.mp4", "out2.mp4", "out3.mp4"]  # 需要合成的视频文件名列表（倒数第二步）
+video_names = ["out0.mp4","out1.mp4", "out2.mp4", "out3.mp4"]  # 需要合成的视频文件名列表（ps：几段故事几个文件）（倒数第二步）
 output_file = "%s/Final.mp4"% main_path  # 合成后的输出最终文件名（最后一步）
 
 concatenate_videos(folder_path, video_names, output_file)
