@@ -1,16 +1,17 @@
 # AICatmeme
 注意❗❗❗
+
 pip install moviepy==1.0.3
 
-需下载ffmpeg：https://ffmpeg.org/download.html ❗❗❗
+需下载ImageMagick：https://imagemagick.org/script/download.php ❗❗❗
 
-以及下载ImageMagick：https://imagemagick.org/script/download.php ❗❗❗
+# 如果本地运行：
+直接打开AI猫meme.py
 
-如果本地运行：直接打开AI猫meme.py
-
-如果要在服务器使用：首先，要在本地运行“批量预制视频.py”，来制作所有meme和背景组合的视频，并将其放在与您的backgrounds同级的文件夹下，且命名为“output_videos”
+# 如果要在服务器使用：
+首先，要在本地运行“批量预制视频.py”，来制作所有meme和背景组合的视频，并将其放在与您的backgrounds同级的文件夹下，且命名为“output_videos”
  
-重磅更新！重磅更新！
+# 重磅更新！重磅更新！
 
 微信小程序已上线！
 微信搜索“AI视频生成猫meme”即可下载！
