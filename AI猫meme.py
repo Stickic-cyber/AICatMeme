@@ -117,6 +117,10 @@ def add_audio_to_video(video_file, audio_file, output_file):
     video_with_audio.write_videofile(output_file, codec='libx264', audio_codec='aac')
 
 # 示例故事
+'''
+地点严格从以下选择：["concert", "fantacy", "others", "rooftop", "stage", "airport", "amusementpark", "bank", "cinema", "classroom", "grassland", "gym", "home", "hospital", "kitchen", "library", "museum", "park", "playground", "pool", "restaurant", "school", "shop", "station", "theater", "village"]；
+情感严格从以下选择：["哀求", "崩溃", "吃惊", "大笑", "呆滞", "得瑟", "得意", "烦躁", "害羞", "坏笑", "欢呼", "饥饿", "焦急", "教训", "惊讶", "可怜", "蔑视", "努力", "其他", "傻笑", "痛苦", "威严", "无辜", "无奈", "无助", "兴奋", "勇敢", "愉快", "震惊","愉快"]
+'''
 story = [
     ["library", "同学，某某学院的某教室怎么走？", "得瑟"],
     ["playground", "她老乡某某回家了，让她过来替上课的。", "得意"],
