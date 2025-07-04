@@ -5,6 +5,13 @@ pip install moviepy==1.0.3
 
 需下载ImageMagick：https://imagemagick.org/script/download.php ❗❗❗
 
+Example 效果示例：Fan-submitted video 来自粉丝的投稿视频
+
+https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607
+
+（The background image will also change according to the prompt.）
+（背景图也会随prompt改变而不同）
+
 # 如果本地运行：
 直接打开AI猫meme.py
 
