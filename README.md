@@ -16,7 +16,7 @@ https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607
 直接打开AI猫meme.py
 
 # 如果要在服务器使用：
-首先，要在本地运行“批量预制视频.py”，来制作所有meme和背景组合的视频，并将其放在与您的backgrounds同级的文件夹下，且命名为“output_videos”
+首先，要在本地运行“Batch_Premade_Videos.py”，来制作所有meme和背景组合的视频，并将其放在与您的backgrounds同级的文件夹下，且命名为“output_videos”
  
 # 重磅更新！重磅更新！
 
@@ -36,19 +36,50 @@ https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607
 在“AI猫meme.py”中配置路径！
 在“AI猫meme.py”中配置路径！
 
+Run:
 
-Blockbuster update! Blockbuster update!
+bash
+复制
+编辑
+pip install moviepy==1.0.3
+You also need to download and install ImageMagick:
+🔗 https://imagemagick.org/script/download.php ❗❗❗
 
-WeChat Mini Program has been launched!
-WeChat search "AI视频生成猫meme" to download!
-Or scan the QR code:
-Search for the full name of "AI视频生成猫meme"!
+Example Effect:
+Fan-submitted video:
+🔗 https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607
 
-Here's how to use this script:
-Let's take a look at the "AI cat meme.py"
-Pay attention to the annotations
-Remember to download ImageMagick from the internet
-Configure the path in the AI猫meme.py!
-Configure the path in the AI猫meme.py!
-Configure the path in the AI猫meme.py!
+(The background image will also change according to the prompt.)
+
+🖥 If you're running locally:
+Simply open and run AI猫meme.py
+
+🌐 If you're using a server:
+First, run Batch_Premade_Videos.py locally.
+This script will generate all meme + background combination videos.
+Make sure to place the generated videos in a folder named output_videos,
+located at the same directory level as your backgrounds folder.
+
+🚀 Big Update! Big Update!
+The WeChat Mini Program is now live!
+Search “AI视频生成猫meme” on WeChat to download,
+or scan the QR code below:
+
+
+📌 Be sure to search the full name: AI视频生成猫meme
+
+📜 Script Usage Guide:
+Start with reading AI猫meme.py
+Check the comments in the code carefully.
+⚠️ Don’t forget to download ImageMagick from the web!
+
+Then, make sure to configure the path to ImageMagick in AI猫meme.py!
+
+Repeat:
+
+Set the ImageMagick path in AI猫meme.py!
+
+Set the ImageMagick path in AI猫meme.py!
+
+Set the ImageMagick path in AI猫meme.py!
 
