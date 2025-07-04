@@ -17,7 +17,11 @@ pip install moviepy==1.0.3
 ### 🎥 效果示例 / Example Preview
 
 **Fan-submitted video 来自粉丝的投稿视频：**
-🔗 [https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607](https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607)
+
+
+https://github.com/user-attachments/assets/69a448a4-8dea-4ee9-b8b9-a2b8b231f84b
+
+
 
 🖼️ *The background image will also change according to the prompt.*
 📌 *背景图也会根据 prompt 自动更换！*
@@ -88,7 +92,7 @@ Batch_Premade_Videos.py
 
 ## Example Effect:
 Fan-submitted video:
-🔗 https://github.com/user-attachments/assets/60d9d9a5-16fc-4cfd-857e-d31f02f3d607
+https://github.com/user-attachments/assets/69a448a4-8dea-4ee9-b8b9-a2b8b231f84b
 
 ### (The background image will also change according to the prompt.)
 
