@@ -1,0 +1,10 @@
+flask
+waitress
+flask-cors
+numpy
+redis
+moviepy>=1.0.3
+Pillow
+bypy
+sparkai
+opencv-python
