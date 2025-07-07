@@ -3,10 +3,10 @@
 
 ### ⚠️ 注意 / Important ❗❗❗
 
-请先安装 MoviePy：
+请先安装依赖：
 
 ```bash
-pip install moviepy==1.0.3
+pip install -r requirements.txt
 ```
 
 你还需要安装 **ImageMagick** 才能正确生成视频字幕文字：
