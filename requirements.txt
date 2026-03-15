@@ -1,10 +1,16 @@
+# Web 框架与跨域处理
 flask
-waitress
 flask-cors
+waitress
+
+# 数据处理与数据库
 numpy
 redis
-moviepy>=1.0.3
+
+# 视频与图像处理
+moviepy
 Pillow
+
+# 云服务与大模型 SDK
 bypy
-sparkai
-opencv-python
+spark-ai-python
