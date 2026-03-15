@@ -1,4 +1,4 @@
-# 🐈 AICatMeme: AI 驱动的猫 Meme 视频全自动生成流水线 (V2.0)
+# 🐈 AICatMeme: AI 驱动的猫 Meme 视频全自动生成流水线 (支持对话版)
 
 欢迎来到 **AICatMeme**！这是一个利用大模型（Gemini/OpenAI/DeepSeek 等）自动拆分剧本，并结合猫片素材库自动合成“猫片”视频的开源项目。
 
