@@ -7,8 +7,8 @@ import imageio_ffmpeg
 # 获取底层的 FFmpeg 路径
 ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
 
-INPUT_FOLDER = "D:/Project/AImeme/TheNewMeme/meme_org" 
-OUTPUT_BASE = "D:/Project/AImeme/TheNewMeme/meme_frames"
+INPUT_FOLDER = "./meme_org" 
+OUTPUT_BASE = "./meme"
 
 name_map = {
     "哀求": "imploring", "崩溃": "broken", "吃惊": "surprised", "大笑": "laughing",
