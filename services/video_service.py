@@ -6,6 +6,7 @@ import subprocess
 from utils.draw_utils import wrap_text
 from core.config import EMOTION_FOLDER, BG_FOLDER, FONT_PATH
 import imageio_ffmpeg
+
 # 动态获取当前 Python 环境自带的 ffmpeg 绝对路径
 FFMPEG_EXE = imageio_ffmpeg.get_ffmpeg_exe()
 
@@ -76,7 +77,6 @@ def process_single_scene_ffmpeg(index, scene, temp_dir):
     texts = []
     
     # 基础文字滤镜参数（去掉了背景框，加上黑色描边）
-    # 基础文字滤镜参数（去掉了背景框，加上黑色描边）
     title_filter = f"drawtext=fontfile='{font_safe}':textfile='{title_txt}':x=(w-text_w)/2:y=50:fontsize=75:fontcolor=yellow:borderw=4:bordercolor=black"
     
     if stype == 'single' and len(chars) > 0:
@@ -99,7 +99,8 @@ def process_single_scene_ffmpeg(index, scene, temp_dir):
         dialogue_txt = write_text_file(temp_dir, f"dial_{index}.txt", dialogue)
         
         texts.append(title_filter)
-        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{name_txt}':x=(w-text_w)/2:y=1080-100:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
+        # 单人场景：名字悬浮于头顶 (y=260)，台词保留在底部
+        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{name_txt}':x=(w-text_w)/2:y=260:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
         texts.append(f"drawtext=fontfile='{font_safe}':textfile='{dialogue_txt}':x=(w-text_w)/2:y=1080-220:fontsize=52:fontcolor=white:borderw=3:bordercolor=black:line_spacing=-30")
         
         filters.append(f"[v1]{','.join(texts)}[vout]")
@@ -140,18 +141,20 @@ def process_single_scene_ffmpeg(index, scene, temp_dir):
         filters.append(f"[v3][ra]overlay=x=530:y=(H-h)/2:enable='gte(t,{dur_l})'[v4]")
 
         # 文本生成
-        # 文本生成
         ln_txt = write_text_file(temp_dir, f"ln_{index}.txt", chars[0]['name'])
         rn_txt = write_text_file(temp_dir, f"rn_{index}.txt", chars[1]['name'])
         ld_txt = write_text_file(temp_dir, f"ld_{index}.txt", wrap_text(f"*{chars[0]['text']}", 10))  # 修改为 10 字符换行
         rd_txt = write_text_file(temp_dir, f"rd_{index}.txt", wrap_text(f"*{chars[1]['text']}", 10))  # 修改为 10 字符换行
 
         texts.append(title_filter)
-        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{ln_txt}':x=380-text_w/2:y=1080-100:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
-        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{rn_txt}':x=790-text_w/2:y=1080-100:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
-        # 台词稍微上提，防止字号变大后和名字重叠
-        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{ld_txt}':enable='lt(t,{dur_l})':x=380-text_w/2:y=1080-260:fontsize=52:fontcolor=white:borderw=3:bordercolor=black:line_spacing=-30")
+        # 双人场景：名字悬浮于头顶 (y=260)，并修正了左侧猫咪中心对齐 (x=290)
+        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{ln_txt}':x=290-text_w/2:y=260:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
+        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{rn_txt}':x=790-text_w/2:y=260:fontsize=52:fontcolor=yellow:borderw=3:bordercolor=black")
+        
+        # 台词留在底部，同步修正左侧台词中心对齐 (x=290)
+        texts.append(f"drawtext=fontfile='{font_safe}':textfile='{ld_txt}':enable='lt(t,{dur_l})':x=290-text_w/2:y=1080-260:fontsize=52:fontcolor=white:borderw=3:bordercolor=black:line_spacing=-30")
         texts.append(f"drawtext=fontfile='{font_safe}':textfile='{rd_txt}':enable='gte(t,{dur_l})':x=790-text_w/2:y=1080-260:fontsize=52:fontcolor=white:borderw=3:bordercolor=black:line_spacing=-30")
+        
         filters.append(f"[v4]{','.join(texts)}[vout]")
 
         # 音频混合 (右侧音频延后 dur_l 毫秒)
