@@ -19,6 +19,7 @@
 
 微信小程序已正式上线！📱 打开微信，搜索：**AI视频生成猫meme** 即可体验！或直接扫描二维码进入👇
 
+![gh\_d8d6e3fde1de\_430](https://github.com/user-attachments/assets/4d2ec73b-c029-4d11-beb4-95c45fd2d9fc)
 ---
 
 ### 🛠️ 环境准备与安装 / Installation
