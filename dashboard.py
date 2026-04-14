@@ -3,7 +3,8 @@ import requests
 import json
 import os
 
-# 配置你的Flask后端地址
+# --- 核心修改点 1：配置你新的阿里云服务器子域名 ---
+# 注意：如果你后续在 Nginx 配置了 SSL 证书，这里记得把 http 改成 https
 API_BASE_URL = "http://localhost:5000"
 
 st.set_page_config(page_title="Cat Meme Generator", page_icon="🐈", layout="wide")
@@ -48,9 +49,9 @@ translations = {
         "spin_debug": "正在读取场景数据并渲染视频...",
         "err_json": "⚠️ 输入的 JSON 格式不正确，请检查语法！",
         "msg_success": "🎉 {msg}",
-        "msg_saved": "📁 视频已保存至: {path}",
+        "msg_saved": "📁 视频已保存至服务器: {path}",
         "err_gen": "❌ 生成失败: {msg}",
-        "err_conn": "🔌 无法连接到后端服务，请确保Flask正在运行。错误: {err}"
+        "err_conn": "🔌 无法连接到后端服务，请检查网络或确认服务端已启动。错误: {err}"
     },
     "en": {
         "title": "🐈 Cat Meme Video Generator",
@@ -77,7 +78,7 @@ translations = {
         "spin_debug": "Rendering video...",
         "err_json": "⚠️ Invalid JSON format!",
         "msg_success": "🎉 {msg}",
-        "msg_saved": "📁 Video saved to: {path}",
+        "msg_saved": "📁 Video saved on server at: {path}",
         "err_gen": "❌ Generation failed: {msg}",
         "err_conn": "🔌 Cannot connect to backend service. Error: {err}"
     }
@@ -104,7 +105,6 @@ with header_col1:
     st.markdown(t["desc"])
 
 # --- 3. 侧边栏多模型配置 ---
-# 定义各大厂商的默认模型列表
 PROVIDER_MODELS = {
     "Google Gemini": ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-1.5-flash"],
     "OpenAI": ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"],
@@ -116,10 +116,8 @@ PROVIDER_MODELS = {
 with st.sidebar:
     st.header(t["sidebar_title"])
     
-    # 厂商选择
     provider_choice = st.selectbox(t["provider_label"], list(PROVIDER_MODELS.keys()))
     
-    # 动态关联模型选项
     if provider_choice == "Custom (OpenAI Compatible)":
         model_choice = st.text_input(t["model_label"], placeholder="例如: qwen-plus")
     else:
@@ -127,7 +125,6 @@ with st.sidebar:
     
     api_key_input = st.text_input(t["api_key_label"], type="password", placeholder=t["api_key_ph"])
     
-    # 如果不是 Gemini 和 Anthropic，通常都会用到 Base URL 覆盖（比如国内各种 API 中转）
     base_url_input = ""
     if provider_choice in ["OpenAI", "DeepSeek", "Custom (OpenAI Compatible)"]:
         default_base = "https://api.deepseek.com" if provider_choice == "DeepSeek" else ""
@@ -162,7 +159,6 @@ with tab1:
             else:
                 with st.spinner(t["spin_story"]):
                     try:
-                        # 组装包含完整 API 信息的 payload
                         payload = {
                             "story": story_input,
                             "provider": provider_choice,
@@ -179,11 +175,17 @@ with tab1:
                         if response.status_code == 200:
                             result = response.json()
                             st.success(t["msg_success"].format(msg=result.get('message')))
+                            
+                            # --- 核心修改点 2：改为网络 URL 播放模式 ---
                             file_path = result.get('file_path')
-                            if file_path and os.path.exists(file_path):
-                                video_to_play_story = file_path
-                            else:
+                            if file_path:
+                                file_name = os.path.basename(file_path)
+                                video_url = f"{API_BASE_URL}/outputs/{file_name}"
+                                video_to_play_story = video_url
+                                # 同时保留一条文件路径的提示，方便查阅
                                 st.info(t["msg_saved"].format(path=file_path))
+                            else:
+                                st.error("未获取到视频路径")
                         else:
                             st.error(t["err_gen"].format(msg=response.json().get('message', 'Unknown Error')))
                     except requests.exceptions.RequestException as e:
@@ -203,14 +205,55 @@ with tab2:
     default_json = """{
   "scenes": [
     {
-      "title": "当程序员遇到 Bug",
+      "title": "特工潜入",
+      "place": "office",
+      "scene_type": "single",
+      "characters": [
+        {
+          "name": "特工·大橘",
+          "emotion": "majestic",
+          "text": "目标已经锁定。那个白色的保险箱（冰箱）里，一定藏着改变世界的终极武器。"
+        }
+      ]
+    },
+    {
+      "title": "风险评估",
+      "place": "lab",
+      "scene_type": "dialogue",
+      "characters": [
+        {
+          "name": "总部辅助",
+          "emotion": "scolding",
+          "text": "大橘！冷静点！如果你被人类的‘红外线’（走廊灯）扫到，今晚就彻底暴露了！"
+        },
+        {
+          "name": "特工·大橘",
+          "emotion": "smirk",
+          "text": "呵，这些所谓的‘激光’，只是我平时玩剩下的玩具罢了。看我闪现！"
+        }
+      ]
+    },
+    {
+      "title": "最后的冲击",
       "place": "lab",
       "scene_type": "single",
       "characters": [
         {
-          "name": "程序员小王",
-          "emotion": "broken", 
-          "text": "这个Bug我调了三天三夜，三天三夜！"
+          "name": "特工·大橘",
+          "emotion": "striving",
+          "text": "保险箱的大门正在开启！白色的光芒... 我看见它了！是神圣的冻干！"
+        }
+      ]
+    },
+    {
+      "title": "真相大白",
+      "place": "home",
+      "scene_type": "single",
+      "characters": [
+        {
+          "name": "大橘",
+          "emotion": "awkward",
+          "text": "呃，妈？你听我解释... 我只是半夜起来帮冰箱检查一下制冷效果，绝对不是在偷吃。"
         }
       ]
     }
@@ -243,11 +286,16 @@ with tab2:
                         if response.status_code == 200:
                             result = response.json()
                             st.success(t["msg_success"].format(msg=result.get('message')))
+                            
+                            # --- 核心修改点 3：改为网络 URL 播放模式 ---
                             file_path = result.get('file_path')
-                            if file_path and os.path.exists(file_path):
-                                video_to_play_debug = file_path
-                            else:
+                            if file_path:
+                                file_name = os.path.basename(file_path)
+                                video_url = f"{API_BASE_URL}/outputs/{file_name}"
+                                video_to_play_debug = video_url
                                 st.info(t["msg_saved"].format(path=file_path))
+                            else:
+                                st.error("未获取到视频路径")
                         else:
                             st.error(t["err_gen"].format(msg=response.json().get('message', 'Unknown Error')))
                             
