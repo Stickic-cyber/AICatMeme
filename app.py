@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import secrets
@@ -6,13 +7,13 @@ import redis
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from waitress import serve
+from openai import OpenAI  # 修改：引入 OpenAI 客户端以兼容通义千问
 
-from core.config import REDIS_HOST, REDIS_PORT, OUTPUT_FOLDER
+# 注意：请确保 core.config 中已将 GEMINI_API_KEY 替换为 DASHSCOPE_API_KEY
+from core.config import REDIS_HOST, REDIS_PORT, OUTPUT_FOLDER, DASHSCOPE_API_KEY
 from core.models import StoryAnalysis
 from utils.logger import initialize_csv, log_submission
 from services.video_service import create_video
-from google import genai
-from core.config import GEMINI_API_KEY
 
 app = Flask(__name__)
 CORS(app)
@@ -29,28 +30,54 @@ def generate_password(length=6):
 def process_request(data_json, client_ip):
     story = data_json.get('story', '')
     
-    # 获取前端传来的配置，如果前端没传或为空，则回退到代码里导入的默认配置
-    user_api_key = data_json.get('api_key') or GEMINI_API_KEY
-    model_name = data_json.get('model', 'gemini-2.5-flash')
+    # 获取前端传来的配置，如果为空则回退到默认的通义千问配置
+    user_api_key = data_json.get('api_key') or DASHSCOPE_API_KEY
+    model_name = data_json.get('model', 'qwen-plus')  # 修改：默认模型改为 qwen-plus
     
     try:
-        # 使用提取到的 API KEY 初始化客户端
-        client = genai.Client(api_key=user_api_key)
-        prompt_text = f"分析以下故事，将其拆分为连续的镜头.故事：{story}"
+        # 修改：使用 OpenAI 客户端和阿里云的 base_url 初始化
+        client = OpenAI(
+            api_key=user_api_key,
+            base_url="[https://dashscope.aliyuncs.com/compatible-mode/v1](https://dashscope.aliyuncs.com/compatible-mode/v1)"
+        )
+        
+        prompt_text = f"分析以下故事，将其拆分为连续的镜头。故事：{story}"
+        
+        # 将 Pydantic 模型的 Schema 转换为字符串，用于告诉大模型我们要什么格式
+        schema_str = json.dumps(StoryAnalysis.model_json_schema(), ensure_ascii=False)
 
-        # 使用前端传过来的模型名字
-        response = client.models.generate_content(
-            model=model_name, 
-            contents=[prompt_text],
-            config={
-                "response_mime_type": "application/json",
-                "response_schema": StoryAnalysis.model_json_schema(), 
-                "temperature": 0.7,
-            },
+        # 构造系统提示词，强化 JSON 输出并规范画面中的文本语言
+        system_instruction = (
+            "你是一个专业的AI视频导播。请根据用户提供的故事生成连续的镜头脚本。\n"
+            f"必须严格按照以下 JSON Schema 格式返回结果（只返回合法的 JSON 对象，不要包含 markdown 标记）：\n{schema_str}\n"
+            "重要要求：写脚本生成图像时，图像的所有文本都用英文。"
         )
 
-        parsed_json = json.loads(response.text)
+        # 发起 API 请求
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": system_instruction},
+                {"role": "user", "content": prompt_text}
+            ],
+            response_format={"type": "json_object"}, # 开启 JSON 模式
+            temperature=0.7,
+        )
+
+        # 提取返回文本
+        result_text = response.choices[0].message.content
+        
+        # 容错清理：防止模型依然输出 ```json 标记
+        if result_text.startswith("```"):
+            result_text = result_text.strip("`").removeprefix("json").strip()
+
+        parsed_json = json.loads(result_text)
+        
+        # 提取 scenes 数组
         generated_data = parsed_json.get("scenes", [])
+        if not generated_data and isinstance(parsed_json, list):
+            generated_data = parsed_json
+            
         user_id = generate_password()
         output_path = f"{OUTPUT_FOLDER}/{user_id}.mp4"
 
@@ -90,5 +117,5 @@ def generate_video_debug():
 
 if __name__ == '__main__':
     initialize_csv()
-    print("猫Meme视频制作服务已启动...")
+    print("猫Meme视频制作服务已启动 (Powered by Qwen)...")
     serve(app, host="0.0.0.0", port=5000)
