@@ -2,6 +2,8 @@
 
 欢迎来到 **AICatMeme**！这是一个利用大模型（Gemini/OpenAI/DeepSeek 等）自动拆分剧本，并结合猫片素材库自动合成“猫片”视频的开源项目。
 
+## **体验网址：`ai.stickic.asia`**
+
 ---
 
 ### 🎥 效果示例 / Example Preview
